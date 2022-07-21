@@ -39,9 +39,8 @@ const register = (pkgName: string, {
 
   const updateVsix = async () => {
     const cmdPath = path.resolve(vscodeAppRoot, 'bin/code');
-    const vsixFilePath = path.resolve(cacheDir, pkgName, 'node_modules', pkgName, vsixRelPathFromNPMPkg);
-  
-    fs.emptyDirSync(path.resolve(cacheDir, pkgName));
+    const vsixFilePath = path.resolve(cacheDir, 'node_modules', pkgName, vsixRelPathFromNPMPkg);
+
     await exec('npm', ['i', pkgName, `--registry=${registryUrl}`], { stdio: 'inherit', cwd: cacheDir });
     // code --install-extension vsixFilePath
     if (!fs.existsSync(vsixFilePath) || !fs.statSync(vsixFilePath).isFile()) {
