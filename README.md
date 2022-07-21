@@ -34,7 +34,9 @@ const {
   runSlice, // 单次执行函数
   checkUpdate, // 监测是否需要更新
   forceUpdate, // 强制更新，一般在npm unpublish后用到
+  stop,
 } = registerUpdate(packageJSON.name, {
+  registryUrl: 'http://hnpm.hupu.io/', // 默认为'https://registry.npmjs.org/'
   currentVersion: packageJSON.version,
   vscodeAppRoot: vscode.env.appRoot,
   interval: fiveMinutes, // 监测更新频率，值为null时不自动更新

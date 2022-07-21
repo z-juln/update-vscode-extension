@@ -1,6 +1,6 @@
 {
   "name": "update-vscode-extension",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "update-vscode-extension",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -24,13 +24,14 @@
   },
   "homepage": "https://github.com/z-juln/update-vscode-extension#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^10.1.0",
-    "latest": "^0.2.0",
     "semver": "^7.3.7",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/configstore": "^6.0.0",
     "@types/cross-spawn": "^6.0.2",
     "@types/fs-extra": "^9.0.13",
