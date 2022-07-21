@@ -1,0 +1,36 @@
+{
+  "name": "update-vscode-extension",
+  "version": "0.0.1",
+  "description": "update-vscode-extension",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/z-juln/update-vscode-extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/z-juln/update-vscode-extension/issues"
+  },
+  "homepage": "https://github.com/z-juln/update-vscode-extension#readme",
+  "dependencies": {
+    "configstore": "^6.0.0",
+    "cross-spawn": "^7.0.3",
+    "fs-extra": "^10.1.0",
+    "latest": "^0.2.0",
+    "semver": "^7.3.7",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/configstore": "^6.0.0",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.0.6",
+    "@types/semver": "^7.3.10"
+  }
+}
