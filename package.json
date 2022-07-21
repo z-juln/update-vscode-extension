@@ -4,6 +4,10 @@
   "description": "update-vscode-extension",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
   "scripts": {
     "build": "npx tsc",
     "prepublishOnly": "npm run build"
