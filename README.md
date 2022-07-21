@@ -42,10 +42,18 @@ const {
   async beforeCheck() {
     console.log('beforeCheck');
   },
-  async beforeUpdate() {
+  async beforeUpdate(err) {
+    if (err) {
+      console.log('监测版本失败: ', err);
+      return;
+    }
     console.log('beforeUpdate');
   },
-  async afterUpdate() {
+  async afterUpdate(err) {
+    if (err) {
+      console.log('更新失败: ', err);
+      return;
+    }
     console.log('afterUpdate');
   },
 });

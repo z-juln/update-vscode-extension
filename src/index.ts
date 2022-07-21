@@ -25,8 +25,8 @@ const register = (pkgName: string, {
   interval?: number | null;
   vsixRelPathFromNPMPkg?: string;
   beforeCheck?: () => Promise<void>;
-  beforeUpdate?: () => Promise<void>;
-  afterUpdate?: () => Promise<void>;
+  beforeUpdate?: (err?: any) => Promise<void>;
+  afterUpdate?: (err?: any) => Promise<void>;
 }) => {
   const checkUpdate = async () => {
     const latestVersion = await getLatestVersion(pkgName);
@@ -43,14 +43,20 @@ const register = (pkgName: string, {
   };
 
   const runSlice = async () => {
+    await beforeCheck?.();
     try {
-      await beforeCheck?.();
-      if (await checkUpdate()) {
-        await beforeUpdate?.();
-        await updateVsix();
-        await afterUpdate?.();
-      }
-    } catch {}
+      if (!await checkUpdate()) return;
+      await beforeUpdate?.();
+    } catch (error) {
+      await beforeUpdate?.(error);
+      return;
+    }
+    try {
+      await updateVsix();
+      await afterUpdate?.();
+    } catch (error) {
+      await afterUpdate?.(error);
+    }
   };
 
   if (interval !== null) {
