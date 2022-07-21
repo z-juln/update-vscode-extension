@@ -87,4 +87,4 @@ const exec = (...args: Parameters<typeof spawn>) => {
   });
 };
 
-module.exports = register;
+export default register;
