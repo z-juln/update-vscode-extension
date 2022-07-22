@@ -36,6 +36,7 @@ const {
   forceUpdate, // 强制更新，一般在npm unpublish后用到
   stop,
 } = registerUpdate(packageJSON.name, {
+  npmTag: 'latest', // 默认为'latest'
   registryUrl: 'http://hnpm.hupu.io/', // 默认为'https://registry.npmjs.org/'
   currentVersion: packageJSON.version,
   vscodeAppRoot: vscode.env.appRoot,

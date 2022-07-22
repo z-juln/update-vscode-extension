@@ -10,6 +10,7 @@ const cacheDir = path.resolve(os.homedir(), '.update-vscode-extension');
 fs.ensureDirSync(cacheDir);
 
 const register = (pkgName: string, {
+  npmTag = 'latest',
   registryUrl = 'https://registry.npmjs.org/',
   currentVersion,
   vscodeAppRoot,
@@ -19,6 +20,7 @@ const register = (pkgName: string, {
   beforeUpdate,
   afterUpdate,
 }: {
+  npmTag?: string;
   registryUrl?: string;
   currentVersion: string;
   vscodeAppRoot: string;
@@ -33,7 +35,7 @@ const register = (pkgName: string, {
   const stop = () => { clearInterval(intervalTimer); };
 
   const checkUpdate = async () => {
-    const latestVersion = await getLatestVersion(pkgName, registryUrl);
+    const latestVersion = await getLatestVersion(pkgName, registryUrl, npmTag);
     return !!latestVersion && semver.lt(currentVersion, latestVersion);
   };
 
@@ -41,7 +43,7 @@ const register = (pkgName: string, {
     const cmdPath = path.resolve(vscodeAppRoot, 'bin/code');
     const vsixFilePath = path.resolve(cacheDir, 'node_modules', pkgName, vsixRelPathFromNPMPkg);
 
-    await exec('npm', ['i', pkgName, `--registry=${registryUrl}`], { stdio: 'inherit', cwd: cacheDir });
+    await exec('npm', ['i', pkgName, '--tag', npmTag, `--registry=${registryUrl}`], { stdio: 'inherit', cwd: cacheDir });
     // code --install-extension vsixFilePath
     if (!fs.existsSync(vsixFilePath) || !fs.statSync(vsixFilePath).isFile()) {
       throw new Error(`vsix文件不存在(${vsixFilePath})`);
@@ -80,7 +82,7 @@ const register = (pkgName: string, {
   };
 };
 
-const getLatestVersion = async (pkgName: string, registryUrl = 'https://registry.npmjs.org/') => {
+const getLatestVersion = async (pkgName: string, registryUrl = 'https://registry.npmjs.org/', npmTag = 'latest') => {
   if (!registryUrl.endsWith('/')) registryUrl += '/';
 
   const { data, status } = await axios.get(registryUrl + pkgName);
@@ -88,7 +90,7 @@ const getLatestVersion = async (pkgName: string, registryUrl = 'https://registry
     throw new Error(`找不到npm包[${pkgName}]`);
   }
 
-  const latestVersion: string | null = data?.['dist-tags']?.latest ?? null;
+  const latestVersion: string | null = data?.['dist-tags']?.[npmTag] ?? null;
   return latestVersion;
 };
 
