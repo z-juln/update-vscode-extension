@@ -43,7 +43,7 @@ const register = (pkgName: string, {
     const cmdPath = path.resolve(vscodeAppRoot, 'bin/code');
     const vsixFilePath = path.resolve(cacheDir, 'node_modules', pkgName, vsixRelPathFromNPMPkg);
 
-    await exec('npm', ['i', pkgName, '--tag', npmTag, `--registry=${registryUrl}`], { stdio: 'inherit', cwd: cacheDir });
+    await exec('npm', ['i', `${pkgName}${npmTag}`, `--registry=${registryUrl}`], { stdio: 'inherit', cwd: cacheDir });
     // code --install-extension vsixFilePath
     if (!fs.existsSync(vsixFilePath) || !fs.statSync(vsixFilePath).isFile()) {
       throw new Error(`vsix文件不存在(${vsixFilePath})`);
