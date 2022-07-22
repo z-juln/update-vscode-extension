@@ -1,9 +1,9 @@
 import path from 'path';
 import os from 'os';
 import fs from 'fs-extra';
-import axios from 'axios';
 import spawn from 'cross-spawn';
 import semver from 'semver';
+import { getLatestVersion } from '@juln/npm-pkg-version';
 
 const fiveMinutes = 5 * 60 * 1000;
 const cacheDir = path.resolve(os.homedir(), '.update-vscode-extension');
@@ -35,7 +35,7 @@ const register = (pkgName: string, {
   const stop = () => { clearInterval(intervalTimer); };
 
   const checkUpdate = async () => {
-    const latestVersion = await getLatestVersion(pkgName, registryUrl, npmTag);
+    const latestVersion = await getLatestVersion(pkgName, { registryUrl, npmTag });
     return !!latestVersion && semver.lt(currentVersion, latestVersion);
   };
 
@@ -80,18 +80,6 @@ const register = (pkgName: string, {
     checkUpdate,
     stop,
   };
-};
-
-const getLatestVersion = async (pkgName: string, registryUrl = 'https://registry.npmjs.org/', npmTag = 'latest') => {
-  if (!registryUrl.endsWith('/')) registryUrl += '/';
-
-  const { data, status } = await axios.get(registryUrl + pkgName);
-  if (status !== 200) {
-    throw new Error(`找不到npm包[${pkgName}]`);
-  }
-
-  const latestVersion: string | null = data?.['dist-tags']?.[npmTag] ?? null;
-  return latestVersion;
 };
 
 const exec = (...args: Parameters<typeof spawn>) => {
