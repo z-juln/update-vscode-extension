@@ -1,6 +1,6 @@
 {
   "name": "update-vscode-extension",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "update-vscode-extension",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/z-juln/update-vscode-extension#readme",
   "dependencies": {
-    "@juln/npm-pkg-version": "^1.0.2",
+    "@juln/npm-pkg-version": "^1.0.3",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^10.1.0",
     "semver": "^7.3.7",

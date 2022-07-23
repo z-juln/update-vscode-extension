@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@juln/npm-pkg-version@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@juln/npm-pkg-version/-/npm-pkg-version-1.0.2.tgz#d331a710afa8df5b7e90aef0a9dae2446bdbc1ce"
-  integrity sha512-6lt229Xa4fSJeJt3Q0z82TziAwSSDPOisi2dJGPA5GF3X5oGhPXGP8JBxT3RgOtj9s+AXeSozb2WqlRebhNLJA==
+"@juln/npm-pkg-version@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@juln/npm-pkg-version/-/npm-pkg-version-1.0.3.tgz#c169c8173a77f96ead0a5f3bba02fc0551d26408"
+  integrity sha512-S6CbR/Px6Pn3npSU2kGcORrAbaye9LKvVc1Nfvxs7sIvtgTb8y6xgaw++rnT1LnZUGuIoLhBsLc4g7rYzytkvA==
   dependencies:
     axios "^0.27.2"
 
