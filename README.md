@@ -28,13 +28,14 @@ npm包结构如下(默认结构，可通过参数自定义):
 ```typescript
 import vscode from 'vscode';
 import registerUpdate from 'update-vscode-extension';
+import isOnline from 'is-online';
 import packageJSON from '../package.json';
 
 const {
   runSlice, // 单次执行函数
   checkUpdate, // 监测是否需要更新
   forceUpdate, // 强制更新，一般在npm unpublish后用到
-  stop,
+  stop, // 终止整个更新
 } = registerUpdate(packageJSON.name, {
   npmTag: 'latest', // 默认为'latest'
   registryUrl: 'http://hnpm.hupu.io/', // 默认为'https://registry.npmjs.org/'
@@ -44,6 +45,9 @@ const {
   vsixRelPathFromNPMPkg: './extension.vsix', // npm包中，vsix文件的相对路径，默认为'./extension.vsix'
   async beforeCheck() {
     console.log('beforeCheck');
+    if (!await isOnline()) {
+      throw new Error('网络连接失败，自动更新停止'); // 抛出异常可终止本次interval的更新 (注: 下个interval会再次调用beforeCheck)
+    }
   },
   async beforeUpdate(err) {
     if (err) {
