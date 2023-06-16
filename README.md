@@ -43,6 +43,10 @@ const {
   vscodeAppRoot: vscode.env.appRoot,
   interval: fiveMinutes, // 监测更新频率，值为null时不自动更新
   vsixRelPathFromNPMPkg: './extension.vsix', // npm包中，vsix文件的相对路径，默认为'./extension.vsix'
+  async customCheckUpdate() { // 默认使用 @juln/npm-pkg-version 检测获取最新版本号并版本, 如果公司的npm服务有特殊的权限校验, 比如需要请求头校验, 请自己实现版本检测功能
+    const requireUpdate: boolean = TODO();
+    return requireUpdate;
+  },
   async beforeCheck() {
     console.log('beforeCheck');
     if (!await isOnline()) {
@@ -68,3 +72,13 @@ const {
 // registerUpdate与setInterval等效，不会立即执行，如需立即执行，得手动调用runSlice
 runSlice();
 ```
+
+## 常见问题
+
+1. vscode安装后, 目录结构改了, 导致无法拿到vscode执行路径, 没法更新.
+
+解决版本: 设置环境变量VSCODE_BIN_PATH指向可执行文件code的路径 (对应process.env.VSCODE_BIN_PATH)
+
+2. 如果公司的npm服务有特殊的权限校验, 比如需要请求头校验, 请自己实现版本检测功能
+
+提供了customCheckUpdate的api, 可自定义版本检测功能
